@@ -9,7 +9,7 @@ public class HandsHakeTest
     {
     	int peopleCount = 2; 
     	HandsShake handsShake = new HandsShake(peopleCount);    	
-    	assertEquals(1, handsShake.getCombinatoinCount());
+    	assertEquals(1, handsShake.getCombinatoinCount().intValue());
     }
     
     @Test(expected = IllegalArgumentException.class)    
@@ -38,7 +38,7 @@ public class HandsHakeTest
     {
     	int peopleCount = 4; 
     	HandsShake handsShake = new HandsShake(peopleCount);    	
-    	assertEquals(2, handsShake.getCombinatoinCount());
+    	assertEquals(2, handsShake.getCombinatoinCount().intValue());
     }
     
     @Test
@@ -46,6 +46,6 @@ public class HandsHakeTest
     {
     	int peopleCount = 6; 
     	HandsShake handsShake = new HandsShake(peopleCount);    	
-    	assertEquals(5, handsShake.getCombinatoinCount());
+    	assertEquals(5, handsShake.getCombinatoinCount().intValue());
     }        
 }

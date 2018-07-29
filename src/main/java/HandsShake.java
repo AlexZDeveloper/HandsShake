@@ -1,3 +1,5 @@
+import java.math.BigInteger;
+
 /*
 	Задача 112: Совещание
 Начинается совещание за круглым столом. Собралось N человек. Как им одновременно пожать руки друг другу так, 
@@ -17,7 +19,7 @@ public class HandsShake
 	// for optimization and improvement speed we'll store calculated number combinations 
 	// for all count of people < N
 	// as number of people always is even, then number of combinations for K people will store in variable combinations[K/2 - 1]  
-	private int[] combinations;
+	private BigInteger[] combinations;
 	
 	public HandsShake(int N) {
 		if (N < LOWER_BOUND) {
@@ -32,24 +34,28 @@ public class HandsShake
 		
 		this.N = N;
 
-		combinations = new int[N/2];
+		combinations = new BigInteger[N/2];
 	}
 	
-	public int getCombinatoinCount() {	
+	public BigInteger getCombinatoinCount() {	
 		return getCombinationCount(N);
 	}
 	
 	// recursive function
-	private int getCombinationCount(int peopleCount) {
+	private BigInteger getCombinationCount(int peopleCount) {
 		if (peopleCount == 0)
-			return 1;
-		if (combinations[peopleCount / 2 - 1] != 0) {
+			return BigInteger.ONE;
+		if (combinations[peopleCount / 2 - 1] != null) {
 			return combinations[peopleCount / 2 - 1];
 		}
 		
-		int combinationCount = 0;
+		BigInteger combinationCount = BigInteger.ZERO;
 		for (int i = 1; i < peopleCount; i+=2) {
-			combinationCount += getCombinationCount(i - 1) * getCombinationCount(peopleCount - i - 1);
+			BigInteger combinationLeftCount = getCombinationCount(i - 1);
+			BigInteger combinationRightCount = getCombinationCount(peopleCount - i - 1);
+			combinationCount = combinationCount.add(
+					combinationLeftCount.multiply(combinationRightCount)
+					);
 		}
 		combinations[peopleCount / 2 - 1] = combinationCount;
 		return combinationCount;
@@ -68,7 +74,19 @@ public class HandsShake
     	System.out.printf( "Combination count for %s people: %s\n", 
     			peopleCount, 
     			handsShake.getCombinatoinCount());
-        
+    	
+        peopleCount = 20; 
+    	handsShake = new HandsShake(peopleCount);
+    	System.out.printf( "Combination count for %s people: %s\n", 
+    			peopleCount, 
+    			handsShake.getCombinatoinCount());    	
+
+        peopleCount = 50; 
+    	handsShake = new HandsShake(peopleCount);
+    	System.out.printf( "Combination count for %s people: %s\n", 
+    			peopleCount, 
+    			handsShake.getCombinatoinCount());    	
+    	
         peopleCount = 100; 
     	handsShake = new HandsShake(peopleCount);
     	System.out.printf( "Combination count for %s people: %s\n", 
